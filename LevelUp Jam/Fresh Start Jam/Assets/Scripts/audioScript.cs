@@ -7,12 +7,21 @@ public class audioScript : MonoBehaviour
 {
     public Slider volumeSlider; // Volume slider element in the settings canvas
     public AudioSource audioSource; // The audio source to produce music and sound effects within the game.
-    public float fVolume = 1;
+    public float fVolume;
     public bool bMuted = false;
+
+    //Audio
+    public AudioClip testclip;
+
     // Start is called before the first frame update
     void Start()
     {
-        volumeSlider.value = 1;
+        fVolume = 1;
+        volumeSlider.value = fVolume;
+        audioSource.volume = fVolume;
+        DontDestroyOnLoad(gameObject); // Keep the audiosource
+        audioSource.clip = testclip;
+        audioSource.Play();
 
     }
 
@@ -26,11 +35,13 @@ public class audioScript : MonoBehaviour
     {
         fVolume = volumeSlider.value;
         audioSource.volume = fVolume;
-
+        Debug.Log("Volume : " + fVolume);
     }
     public void onMuteButtonPressed()
     {
-        audioSource.mute = !audioSource.mute;
+        bMuted = !audioSource.mute;
+        audioSource.mute = bMuted;
+        Debug.Log("Mute : " + bMuted);
     }
 
 }

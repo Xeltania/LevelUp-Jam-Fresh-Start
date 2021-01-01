@@ -32,7 +32,14 @@ public class ButtonScript : MonoBehaviour
 
     public void onStartButton() 
     {
+        Debug.Log("Loading Testbed");
         SceneManager.LoadScene("Levels");
+    }
+
+    public void onExitButton()
+    {
+        Debug.Log("Quitting App");
+        Application.Quit();
     }
 }
 
