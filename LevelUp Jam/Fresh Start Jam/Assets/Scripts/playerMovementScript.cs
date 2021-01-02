@@ -8,12 +8,23 @@ public class playerMovementScript : MonoBehaviour
     private int lookDir; // the direction of the sprite changes based on the button pressed
     public Rigidbody2D player;
     bool bFacingRight;
+    bool bGrounded;
+    GameObject audioSFX;
+    public AudioClip tclip;
 
+    private void Awake()
+    {
+        audioSFX = GameObject.Find("SFXSource");
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
+        audioSFX.GetComponent<AudioSource>().clip = tclip;
+        audioSFX.GetComponent<AudioSource>().mute = false;
         bFacingRight = true;
         speed = 1;
+        bGrounded = true; // Used to check if the player is jumping
 
     }
 
@@ -26,6 +37,8 @@ public class playerMovementScript : MonoBehaviour
 
     void checkMovement()
     {
+        
+
         //Left
         if (Input.GetKey("a"))
         {
@@ -36,6 +49,7 @@ public class playerMovementScript : MonoBehaviour
                 bFacingRight = !bFacingRight;
             }
             // move by speed value
+            walkSound();
             player.velocity = new Vector2(-speed, player.velocity.y);
         }
         //Right
@@ -48,6 +62,7 @@ public class playerMovementScript : MonoBehaviour
                 bFacingRight = !bFacingRight;
             }
             // move by speed value
+            walkSound();
             player.velocity = new Vector2(speed, player.velocity.y);
         }
         //Jump
@@ -55,6 +70,15 @@ public class playerMovementScript : MonoBehaviour
         {
         
 
+        }
+    }
+
+    void walkSound()
+    {
+        if (bGrounded)
+        {
+            if (!audioSFX.GetComponent<AudioSource>().isPlaying)
+                audioSFX.GetComponent<AudioSource>().Play();
         }
     }
 }
