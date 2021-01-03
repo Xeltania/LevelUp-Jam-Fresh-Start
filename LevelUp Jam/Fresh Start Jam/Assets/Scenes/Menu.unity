@@ -1548,7 +1548,7 @@ MonoBehaviour:
   audioSource: {fileID: 1228377342}
   fVolume: 0
   bMuted: 0
-  testclip: {fileID: 8300000, guid: c5c5db24a86d907498ecd9a3588c7344, type: 3}
+  testclip: {fileID: 8300000, guid: 640a4b1b6c41ba140bf929f670406435, type: 3}
 --- !u!82 &1228377342
 AudioSource:
   m_ObjectHideFlags: 0

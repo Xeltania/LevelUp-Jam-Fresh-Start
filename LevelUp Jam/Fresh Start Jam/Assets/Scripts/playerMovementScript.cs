@@ -11,7 +11,8 @@ public class playerMovementScript : MonoBehaviour
     bool bGrounded;
     GameObject audioSFX;
     public AudioClip tclip;
-
+    Vector2 jump = new Vector2(0, 2);
+    public GameObject floor, spawn;
     private void Awake()
     {
         audioSFX = GameObject.Find("SFXSource");
@@ -23,7 +24,7 @@ public class playerMovementScript : MonoBehaviour
         audioSFX.GetComponent<AudioSource>().clip = tclip;
         audioSFX.GetComponent<AudioSource>().mute = false;
         bFacingRight = true;
-        speed = 1;
+        speed = 2.5f; jumpForce = 4;
         bGrounded = true; // Used to check if the player is jumping
 
     }
@@ -33,6 +34,9 @@ public class playerMovementScript : MonoBehaviour
     {
         //Check the player movement
         checkMovement();
+        
+        // if they fall off respawn at start
+        if (player.position.y < -10) player.gameObject.transform.position = (spawn.transform.position);
     }
 
     void checkMovement()
@@ -66,10 +70,20 @@ public class playerMovementScript : MonoBehaviour
             player.velocity = new Vector2(speed, player.velocity.y);
         }
         //Jump
-        if (Input.GetKey("space"))
+        if (Input.GetKey("space") && bGrounded)
         {
-        
+            player.AddForce(jump * jumpForce, ForceMode2D.Impulse);
 
+            bGrounded = false;
+
+        }
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (floor.tag == "Floor")
+        {
+            Debug.Log("floored" + bGrounded);
+            bGrounded = true;
         }
     }
 
